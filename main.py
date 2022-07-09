@@ -152,11 +152,11 @@ async def register(ctx: discord.ApplicationContext, name, job, contact, interest
     await ctx.respond("Registered successfully!")
 
 
-@bot.slash_command(name="upload", description="Upload your volunteer slot here for others to volunteer.")
-@discord.option(name="summary")
-@discord.option(name="description")
-@discord.option(name="org")
-@discord.option(name="contact")
+@bot.slash_command(name="upload", description="Upload Events here for others to volunteer.")
+@discord.option(name="name", description="Name of event")
+@discord.option(name="description", description="short description of event")
+@discord.option(name="org", description="Organization hosting event")
+@discord.option(name="contact", description="email or phone number")
 @discord.option(name="targets", description="Comma separated list of targets [Youth,Elderly,Disabled]")
 async def upload(ctx, summary, description, org, contact, targets):
     userid = str(ctx.user.id)
