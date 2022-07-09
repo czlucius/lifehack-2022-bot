@@ -1,6 +1,6 @@
 import logging
-
 import discord
+import json
 
 from utils import get_latency_ms
 
@@ -8,6 +8,10 @@ bot = discord.Bot()
 
 with open("token.secret", "r") as envfile:
     TOKEN = envfile.read()
+
+
+def get_categories(ctx):
+    return ["Youth", "Elderly"]
 
 
 @bot.event
@@ -30,9 +34,39 @@ async def ping(ctx):
 
 
 @bot.slash_command(name="view", description="View possible volunteering opportunities")
-@discord.option("category", description="Enter category of volunteer opportunity you'd like to participate in")
-async def view(ctx, category):
-    pass
+@discord.option("target", description="Enter target audience of volunteer opportunity you'd like to participate in",
+                required=False, autocomplete=get_categories)
+async def view(ctx, target):
+    with open("data/beneficiary.json", "r") as beneficiaries_raw:
+        beneficiaries = json.loads(beneficiaries_raw.read())
+        embed = discord.Embed(
+            title="Volunteer Opportunities",
+            description="Here are some volunteer opportunities for you to try out. Use /volunteer to apply."
+        )
+
+        for beneficiary in beneficiaries:
+            if target not in beneficiary["targets"]:
+                if target:
+                    # Target param is existent
+                    continue
+            value = f"""{beneficiary["description"]}
+**Organisation:** {beneficiary["org"]}
+**Target(s)**: {str(beneficiary["targets"]).replace("[", "").replace("]", "").replace("'", "")}
+**Contact:** {beneficiary["contact"]}, {beneficiary["contact_discord"]}
+**Volunteer ID:**
+```
+{beneficiary["id"]}
+```
+"""
+            embed.add_field(
+                name=beneficiary["summary"],
+                value=value
+            )
+        # embed.add_field(
+        #     name="Thanks for your interest!",
+        #     value="1"
+        # )
+    await ctx.respond(embed=embed)
 
 
 @bot.slash_command(name="volunteer", description="Apply for a volunteering opportunity")
