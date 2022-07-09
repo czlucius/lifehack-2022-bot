@@ -180,7 +180,7 @@ async def upload(ctx, summary, description, org, contact, targets):
             "description": description,
             "org": org,
             "contact": contact,
-            "contact_discord": ctx.user,
+            "contact_discord": str(ctx.user),
             "contact_discord_id": userid,
             "targets": targets.split(","),
             "volunteers": []
