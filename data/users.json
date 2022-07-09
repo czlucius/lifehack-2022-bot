@@ -1,0 +1,28 @@
+{
+    "ids": [
+        "780708381379657749",
+        "283951678544412674"
+    ],
+    "main_data": {
+        "780708381379657749": {
+            "name": "John Doe",
+            "job": "",
+            "contact": "test@test.test",
+            "discord_id": "780708381379657749",
+            "interests": [
+                "Elderly",
+                "Disabled",
+                "Carrots"
+            ]
+        },
+        "283951678544412674": {
+            "name": "John Doe",
+            "job": "Student",
+            "contact": "john@1.com",
+            "discord_id": "283951678544412674",
+            "interests": [
+                "Youth"
+            ]
+        }
+    }
+}

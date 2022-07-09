@@ -11,7 +11,7 @@ with open("token.secret", "r") as envfile:
 
 
 def get_categories(ctx):
-    return ["Youth", "Elderly"]
+    return ["Youth", "Elderly", "Disabled"]
 
 
 @bot.event
@@ -44,7 +44,8 @@ async def view(ctx, target):
             description="Here are some volunteer opportunities for you to try out. Use /volunteer to apply."
         )
 
-        for beneficiary in beneficiaries:
+        for beneficiary_id in beneficiaries:
+            beneficiary = beneficiaries[beneficiary_id]
             if target not in beneficiary["targets"]:
                 if target:
                     # Target param is existent
@@ -72,7 +73,70 @@ async def view(ctx, target):
 @bot.slash_command(name="volunteer", description="Apply for a volunteering opportunity")
 @discord.option("event_id", description="ID of the event you'd like to join. View /view for volunteer opportunities.")
 async def volunteer(ctx, event_id):
-    pass
+    userid = str(ctx.user.id)
+    event_id_formatted = event_id.strip().lower()
+
+    with open("data/users.json", "r") as users_raw:
+        users = json.loads(users_raw.read())
+        if not await exit_if_not_registered(ctx, users):
+            return
+        this_user = users["main_data"][userid]
+    with open("data/beneficiary.json", "r+") as beneficiaries_fd:
+        beneficiaries = json.loads(beneficiaries_fd.read())
+        if event_id_formatted in beneficiaries:
+            beneficiary = beneficiaries[event_id_formatted]
+            beneficiary["volunteers"].append(userid)
+            beneficiaries_fd.seek(0)
+            json.dump(beneficiaries, beneficiaries_fd, indent=4)
+            beneficiaries_fd.truncate()
+        else:
+            await ctx.respond("Volunteer ID is invalid.")
+
+
+
+
+
+
+async def exit_if_not_registered(ctx, users):
+    userid = str(ctx.user.id)
+    if userid not in users["ids"]:
+        await ctx.respond("You have not registered")
+        return False
+    else:
+        return True
+
+
+@bot.slash_command(name="register", description="Register for an account")
+@discord.option("name")
+@discord.option("job")
+@discord.option("contact")
+@discord.option("interests", description="Comma-separated list of interests [Youth,Elderly,Disabled]")
+async def register(ctx: discord.ApplicationContext, name, job, contact, interests: str):
+    userid = str(ctx.user.id)
+    interests_parsed = interests.split(",")
+
+    with open("data/users.json", "r") as users_raw:
+        users = json.loads(users_raw.read())
+
+        if userid in users["ids"]:
+            # User alr registered.
+            await ctx.respond("You have already registered.")
+            return
+
+    with open("data/users.json", "r+") as users_raw:
+        volunteer = {
+            "name": name,
+            "job": job,
+            "contact": contact,
+            "discord_id": userid,
+            "interests": interests_parsed
+        }
+        users["main_data"][userid] = volunteer
+        users["ids"].append(userid)
+        logging.info(f"/register: {volunteer}")
+        json.dump(users, users_raw, indent=4)
+        # users_raw.truncate()
+    await ctx.respond("Registered successfully!")
 
 
 @bot.slash_command(name="upload", description="Upload your volunteer slot here for others to volunteer.")
