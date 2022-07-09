@@ -1,0 +1,12 @@
+{
+  "0": {
+    "Company": "RichAF.co",
+    "Contact": "RIECH@RichAF.co",
+    "Benificaries": ["Elderly", "Youth", "Carrots"]
+  },
+  "1": {
+    "Company": "PoorAF.coco",
+    "Contact": "broke@PoorAF.coco",
+    "Benificaries": ["Elderly", "Disabled", "Youth"]
+  }
+}
