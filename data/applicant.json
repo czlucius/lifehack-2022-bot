@@ -1,15 +1,14 @@
-{
-  "0": {
-    "Name": "test",
-    "Job": "",
-    "Contact": "test@test.test",
-    "Interests": ["Elderly", "Disabled", "Carrots"]
+[{
+    "name": "John Doe",
+    "job": "",
+    "contact": "test@test.test",
+    "interests": ["Elderly", "Disabled", "Carrots"]
   },
-  "1": {
-    "Name": "duck",
-    "Job": "",
-    "Contact": "bcwu8qszs@mozmail.com",
-    "Interests": ["Elderly", "Disabled", "Youth"]
+  {
+    "name": "duck",
+    "job": "",
+    "contact": "bcwu8qszs@mozmail.com",
+    "interests": ["Elderly", "Disabled", "Youth"]
     
   }
-}
+]

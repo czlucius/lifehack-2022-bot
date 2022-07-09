@@ -1,0 +1,11 @@
+[
+  {
+    "id": "e27619e6-5beb-478e-a6a6-96e8b1bbc794",
+    "summary": "25 km charity run",
+    "description": "Run for a good cause. Run 25km around Singapore to raise funds for organisations!",
+    "org": "Org 1",
+    "contact": "enquire@org1.czlucius.github.io",
+    "benificaries": ["Elderly", "Youth", "Carrots"],
+    "volunteers": [""]
+  }
+]
