@@ -16,7 +16,7 @@ except FileNotFoundError:
     TOKEN = os.getenv("TOKEN")
 
 
-def get_targets(ctx):
+def get_categories(ctx):
     return ["Youth", "Elderly", "Disabled"]
 
 
@@ -41,7 +41,7 @@ async def ping(ctx):
 
 @bot.slash_command(name="view", description="View possible volunteering opportunities")
 @discord.option("target", description="Enter target audience of volunteer opportunity you'd like to participate in",
-                required=False, autocomplete=get_targets)
+                required=False, autocomplete=get_categories)
 async def view(ctx:discord.ApplicationContext, target):
     await ctx.defer()
 
@@ -88,6 +88,7 @@ async def volunteer(ctx, event_id):
         users = json.loads(users_raw.read())
         if not await exit_if_not_registered(ctx, users):
             return
+        this_user = users["main_data"][userid]
     with open("data/beneficiary.json", "r+") as beneficiaries_fd:
         beneficiaries = json.loads(beneficiaries_fd.read())
         if event_id_formatted in beneficiaries:
@@ -157,11 +158,11 @@ async def register(ctx: discord.ApplicationContext, name, job, contact, interest
     await ctx.respond("Registered successfully!")
 
 
-@bot.slash_command(name="upload", description="Upload your volunteer slot here for others to volunteer.")
-@discord.option(name="summary")
-@discord.option(name="description")
-@discord.option(name="org")
-@discord.option(name="contact")
+@bot.slash_command(name="upload", description="Upload Events here for others to volunteer.")
+@discord.option(name="name", description="Name of event")
+@discord.option(name="description", description="short description of event")
+@discord.option(name="org", description="Organization hosting event")
+@discord.option(name="contact", description="email or phone number")
 @discord.option(name="targets", description="Comma separated list of targets [Youth,Elderly,Disabled]")
 async def upload(ctx, summary, description, org, contact, targets):
     userid = str(ctx.user.id)
@@ -171,7 +172,6 @@ async def upload(ctx, summary, description, org, contact, targets):
             return
     with open("data/beneficiary.json", "r+") as beneficiaries_fd:
         beneficiaries = json.loads(beneficiaries_fd.read())
-        print(beneficiaries)
         vol_id = str(uuid.uuid4())
         beneficiary = {
             "id": vol_id,
@@ -179,15 +179,13 @@ async def upload(ctx, summary, description, org, contact, targets):
             "description": description,
             "org": org,
             "contact": contact,
-            "contact_discord": str(ctx.user),
+            "contact_discord": ctx.user,
             "contact_discord_id": userid,
             "targets": targets.split(","),
             "volunteers": []
         }
         beneficiaries[vol_id] = beneficiary
-        beneficiaries_fd.seek(0)
-        json.dump(beneficiaries, beneficiaries_fd, indent=4)
-        beneficiaries_fd.truncate()
+        json.dump(beneficiaries, beneficiaries_fd)
     await ctx.respond("Successfully uploaded event.")
 
 
