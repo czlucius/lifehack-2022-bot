@@ -1,4 +1,5 @@
 import logging
+import os
 import uuid
 
 import discord
@@ -8,8 +9,11 @@ from utils import get_latency_ms
 
 bot = discord.Bot()
 
-with open("token.secret", "r") as envfile:
-    TOKEN = envfile.read()
+try:
+    with open("token.secret", "r") as envfile:
+        TOKEN = envfile.read()
+except FileNotFoundError:
+    TOKEN = os.getenv("TOKEN")
 
 
 def get_targets(ctx):
@@ -20,7 +24,7 @@ def get_targets(ctx):
 async def on_ready():
     print(f"{bot.user} is ready and online!")
     await bot.change_presence(status=discord.Status.online,
-                              activity=discord.Game(name="Volunteer Matching Bot, type /help"))
+                              activity=discord.Game(name="Volunteer Matching Bot"))
 
 
 @bot.slash_command(name="ping", description="Ping the bot, and get WebSocket latency")
@@ -38,7 +42,9 @@ async def ping(ctx):
 @bot.slash_command(name="view", description="View possible volunteering opportunities")
 @discord.option("target", description="Enter target audience of volunteer opportunity you'd like to participate in",
                 required=False, autocomplete=get_targets)
-async def view(ctx, target):
+async def view(ctx:discord.ApplicationContext, target):
+    await ctx.defer()
+
     with open("data/beneficiary.json", "r") as beneficiaries_raw:
         beneficiaries = json.loads(beneficiaries_raw.read())
         embed = discord.Embed(
