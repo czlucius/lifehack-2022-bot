@@ -1,16 +1,4 @@
 {
-    "ids": [
-        "283951678544412674"
-    ],
-    "main_data": {
-        "283951678544412674": {
-            "name": "czl",
-            "job": "coder",
-            "contact": "czl@1.c",
-            "discord_id": "283951678544412674",
-            "interests": [
-                "Elderly"
-            ]
-        }
-    }
+    "ids": [],
+    "main_data": {}
 }
