@@ -1,0 +1,79 @@
+{
+    "e27619e6-5beb-478e-a6a6-96e8b1bbc794": {
+        "id": "e27619e6-5beb-478e-a6a6-96e8b1bbc794",
+        "summary": "25 km charity run",
+        "description": "Run for a good cause. Run 25km around Singapore to raise funds for children!",
+        "org": "Org 1",
+        "contact": "enquire@org1.czlucius.github.io",
+        "contact_discord": "user1038761666#6782",
+        "contact_discord_id": "780708381379657749",
+        "targets": [
+            "Youth"
+        ],
+        "volunteers": [
+            "283951678544412674"
+        ]
+    },
+    "aa5c10df-e6b6-4556-85ff-83fab86e2638": {
+        "id": "aa5c10df-e6b6-4556-85ff-83fab86e2638",
+        "summary": "A",
+        "description": "B",
+        "org": "C",
+        "contact": "D",
+        "contact_discord": "lcz5#3392",
+        "contact_discord_id": "283951678544412674",
+        "targets": [
+            "Youth"
+        ],
+        "volunteers": [
+            "283951678544412674",
+            "669822875909226506"
+        ]
+    },
+    "1ce11a2c-db4e-4004-a05b-7be93760cc53": {
+        "id": "1ce11a2c-db4e-4004-a05b-7be93760cc53",
+        "summary": "Accomany old folks!",
+        "description": "Stroll with residents from XYZ Old Folks' Home in ABC Park",
+        "org": "XYZ Old Folks' Home",
+        "contact": "contact@xyzvolsg.xyz",
+        "contact_discord": "lcz5#3392",
+        "contact_discord_id": "283951678544412674",
+        "targets": [
+            "Elderly"
+        ],
+        "volunteers": [
+            "283951678544412674",
+            "283951678544412674",
+            "283951678544412674",
+            "283951678544412674"
+        ]
+    },
+    "8b8e2589-88de-4ead-9ba1-abd0db80f4a9": {
+        "id": "8b8e2589-88de-4ead-9ba1-abd0db80f4a9",
+        "summary": "A",
+        "description": "B",
+        "org": "C",
+        "contact": "D",
+        "contact_discord": "lcz5#3392",
+        "contact_discord_id": "283951678544412674",
+        "targets": [
+            "E"
+        ],
+        "volunteers": []
+    },
+    "0f9d4515-2127-478c-8c50-8bc98c82c3a6": {
+        "id": "0f9d4515-2127-478c-8c50-8bc98c82c3a6",
+        "summary": "Rehabilitation programme",
+        "description": "Help the disabled recover at XYZ hospital. A medical degree, and profession in the healthcare industry is required.",
+        "org": "XYZ Hospital",
+        "contact": "xyzhospital@email.xyz",
+        "contact_discord": "lcz5#3392",
+        "contact_discord_id": "283951678544412674",
+        "targets": [
+            "Disabled"
+        ],
+        "volunteers": [
+            "283951678544412674"
+        ]
+    }
+}

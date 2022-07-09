@@ -126,10 +126,10 @@ async def sendDm(userid, content):
     await user.send(content)
 
 
-@bot.slash_command(name="register", description="Register for an account")
+@bot.slash_command(name="register", description="Register for an account | NOTE: info entered will be sent to any initiatives you sign up for")
 @discord.option("name")
-@discord.option("job")
-@discord.option("contact")
+@discord.option("job", description="If you do not have one, enter nil")
+@discord.option("contact", description="Email or contact number for organizers to contact you")
 @discord.option("interests", description="Comma-separated list of interests [Youth,Elderly,Disabled]")
 async def register(ctx: discord.ApplicationContext, name, job, contact, interests: str):
     userid = str(ctx.user.id)
@@ -180,7 +180,7 @@ async def upload(ctx, summary, description, org, contact, targets):
             "description": description,
             "org": org,
             "contact": contact,
-            "contact_discord": ctx.user,
+            "contact_discord": str(ctx.user),
             "contact_discord_id": userid,
             "targets": targets.split(","),
             "volunteers": []

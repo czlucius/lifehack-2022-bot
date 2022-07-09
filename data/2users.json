@@ -1,0 +1,38 @@
+{
+    "ids": [
+        "780708381379657749",
+        "283951678544412674",
+        "669822875909226506"
+    ],
+    "main_data": {
+        "780708381379657749": {
+            "name": "John Doe",
+            "job": "",
+            "contact": "test@test.test",
+            "discord_id": "780708381379657749",
+            "interests": [
+                "Elderly",
+                "Disabled",
+                "Carrots"
+            ]
+        },
+        "283951678544412674": {
+            "name": "A",
+            "job": "B",
+            "contact": "c",
+            "discord_id": "283951678544412674",
+            "interests": [
+                "D"
+            ]
+        },
+        "669822875909226506": {
+            "name": "duck",
+            "job": "schooling",
+            "contact": "3.1415",
+            "discord_id": "669822875909226506",
+            "interests": [
+                "Youth"
+            ]
+        }
+    }
+}

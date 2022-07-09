@@ -1,17 +1,15 @@
 {
     "632a6aca-6740-4c22-ba22-dcdeee99543d": {
         "id": "632a6aca-6740-4c22-ba22-dcdeee99543d",
-        "summary": "a",
-        "description": "b",
-        "org": "c",
-        "contact": "d",
-        "contact_discord": "lcz5#3392",
-        "contact_discord_id": "283951678544412674",
+        "summary": "25km Charity Run",
+        "description": "Run 25 km to raise funds for needy children in their studies and accomodation. Jul 20, all-day.",
+        "org": "The Sustainable Childhood Initiative",
+        "contact": "9123 4567",
+        "contact_discord": "duckupus#6365",
+        "contact_discord_id": "669822875909226506",
         "targets": [
             "Youth"
         ],
-        "volunteers": [
-            "283951678544412674"
-        ]
+        "volunteers": []
     }
 }
