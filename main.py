@@ -55,7 +55,7 @@ async def view(ctx, target):
 **Target(s)**: {str(beneficiary["targets"]).replace("[", "").replace("]", "").replace("'", "")}
 **Contact:** {beneficiary["contact"]}, {beneficiary["contact_discord"]}
 **Volunteer ID:**
-```
+``` 
 {beneficiary["id"]}
 ```
 """
