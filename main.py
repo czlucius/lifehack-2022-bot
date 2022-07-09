@@ -1,4 +1,6 @@
 import logging
+import uuid
+
 import discord
 import json
 
@@ -71,7 +73,7 @@ async def view(ctx, target):
 
 
 @bot.slash_command(name="volunteer", description="Apply for a volunteering opportunity")
-@discord.option("event_id", description= "ID of the event you'd like to join. View /view for volunteer opportunities.")
+@discord.option("event_id", description="ID of the event you'd like to join. View /view for volunteer opportunities.")
 async def volunteer(ctx, event_id):
     userid = str(ctx.user.id)
     event_id_formatted = event_id.strip().lower()
@@ -89,12 +91,18 @@ async def volunteer(ctx, event_id):
             beneficiaries_fd.seek(0)
             json.dump(beneficiaries, beneficiaries_fd, indent=4)
             beneficiaries_fd.truncate()
+            ben_id = beneficiary["contact_discord_id"]
+            user = users["main_data"][userid]
+            await sendDm(ben_id, f"""{ctx.user} has signed up for your event, {beneficiary['summary']}.
+Details:
+Name: {user['name']}
+Job: {user['job']}
+Contact: {user['contact']}
+Discord: {ctx.user}
+Interests: {str(user['interests']).replace('[', '').replace(']', '').replace("'", '')}""")
+            await ctx.respond("Successfully registered in volunteer event.")
         else:
             await ctx.respond("Volunteer ID is invalid.")
-
-
-
-
 
 
 async def exit_if_not_registered(ctx, users):
@@ -104,6 +112,11 @@ async def exit_if_not_registered(ctx, users):
         return False
     else:
         return True
+
+
+async def sendDm(userid, content):
+    user = await bot.fetch_user(int(userid))
+    await user.send(content)
 
 
 @bot.slash_command(name="register", description="Register for an account")
@@ -140,8 +153,34 @@ async def register(ctx: discord.ApplicationContext, name, job, contact, interest
 
 
 @bot.slash_command(name="upload", description="Upload your volunteer slot here for others to volunteer.")
-@discord.option("event_id", description="ID of the event you'd like to join. View /view for volunteer opportunities.")
-async def upload(ctx):
-    pass
+@discord.option(name="summary")
+@discord.option(name="description")
+@discord.option(name="org")
+@discord.option(name="contact")
+@discord.option(name="targets", description="Comma separated list of targets [Youth,Elderly,Disabled]")
+async def upload(ctx, summary, description, org, contact, targets):
+    userid = str(ctx.user.id)
+
+    with open("data/users.json", "r") as users_fd:
+        if not await exit_if_not_registered(ctx, json.loads(users_fd.read())):
+            return
+    with open("data/beneficiary.json", "r+") as beneficiaries_fd:
+        beneficiaries = json.loads(beneficiaries_fd.read())
+        vol_id = str(uuid.uuid4())
+        beneficiary = {
+            "id": vol_id,
+            "summary": summary,
+            "description": description,
+            "org": org,
+            "contact": contact,
+            "contact_discord": ctx.user,
+            "contact_discord_id": userid,
+            "targets": targets.split(","),
+            "volunteers": []
+        }
+        beneficiaries[vol_id] = beneficiary
+        json.dump(beneficiaries, beneficiaries_fd)
+    await ctx.respond("Successfully uploaded event.")
+
 
 bot.run(TOKEN)  # run the bot with the token
