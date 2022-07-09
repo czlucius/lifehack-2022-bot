@@ -70,7 +70,7 @@ async def view(ctx, target):
 
 
 @bot.slash_command(name="volunteer", description="Apply for a volunteering opportunity")
-@discord.option("event_id", description="ID of the event you'd like to join. View /view for volunteer opportunities.")
+@discord.option("event_id", description= "ID of the event you'd like to join. View /view for volunteer opportunities.")
 async def volunteer(ctx, event_id):
     pass
 
@@ -79,6 +79,5 @@ async def volunteer(ctx, event_id):
 @discord.option("event_id", description="ID of the event you'd like to join. View /view for volunteer opportunities.")
 async def upload(ctx):
     pass
-
 
 bot.run(TOKEN)  # run the bot with the token
