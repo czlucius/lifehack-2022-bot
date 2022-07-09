@@ -185,7 +185,9 @@ async def upload(ctx, summary, description, org, contact, targets):
             "targets": targets.split(","),
             "volunteers": []
         }
+
         beneficiaries[vol_id] = beneficiary
+        beneficiaries_fd.seek(0)
         json.dump(beneficiaries, beneficiaries_fd)
     await ctx.respond("Successfully uploaded event.")
 
