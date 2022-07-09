@@ -12,7 +12,7 @@ with open("token.secret", "r") as envfile:
     TOKEN = envfile.read()
 
 
-def get_categories(ctx):
+def get_targets(ctx):
     return ["Youth", "Elderly", "Disabled"]
 
 
@@ -37,7 +37,7 @@ async def ping(ctx):
 
 @bot.slash_command(name="view", description="View possible volunteering opportunities")
 @discord.option("target", description="Enter target audience of volunteer opportunity you'd like to participate in",
-                required=False, autocomplete=get_categories)
+                required=False, autocomplete=get_targets)
 async def view(ctx, target):
     with open("data/beneficiary.json", "r") as beneficiaries_raw:
         beneficiaries = json.loads(beneficiaries_raw.read())
@@ -82,7 +82,6 @@ async def volunteer(ctx, event_id):
         users = json.loads(users_raw.read())
         if not await exit_if_not_registered(ctx, users):
             return
-        this_user = users["main_data"][userid]
     with open("data/beneficiary.json", "r+") as beneficiaries_fd:
         beneficiaries = json.loads(beneficiaries_fd.read())
         if event_id_formatted in beneficiaries:
@@ -166,6 +165,7 @@ async def upload(ctx, summary, description, org, contact, targets):
             return
     with open("data/beneficiary.json", "r+") as beneficiaries_fd:
         beneficiaries = json.loads(beneficiaries_fd.read())
+        print(beneficiaries)
         vol_id = str(uuid.uuid4())
         beneficiary = {
             "id": vol_id,
@@ -173,13 +173,15 @@ async def upload(ctx, summary, description, org, contact, targets):
             "description": description,
             "org": org,
             "contact": contact,
-            "contact_discord": ctx.user,
+            "contact_discord": str(ctx.user),
             "contact_discord_id": userid,
             "targets": targets.split(","),
             "volunteers": []
         }
         beneficiaries[vol_id] = beneficiary
-        json.dump(beneficiaries, beneficiaries_fd)
+        beneficiaries_fd.seek(0)
+        json.dump(beneficiaries, beneficiaries_fd, indent=4)
+        beneficiaries_fd.truncate()
     await ctx.respond("Successfully uploaded event.")
 
 
