@@ -8,6 +8,7 @@ import json
 from utils import get_latency_ms
 
 bot = discord.Bot()
+logging.basicConfig(level=logging.DEBUG)
 
 try:
     with open("token.secret", "r") as envfile:
